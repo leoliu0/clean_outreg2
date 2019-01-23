@@ -1,8 +1,9 @@
-import sys, getopt
+import getopt
+import json
+import os
+import sys
 import xml.etree.ElementTree as ET
 from glob import glob
-import csv
-import os
 
 def proc_file(f):
     tree = ET.parse(f)
@@ -42,6 +43,9 @@ def proc_row(row):
             if (cell == '(.)') or (cell == '.'):
                 dot_count += 1
                 cell = ''
+            if vardict:
+                if cell in vardict:
+                    cell = vardict[cell]
         cells.append(cell)
     if cols == none_count:
         global hline_count
@@ -55,12 +59,11 @@ def proc_row(row):
     return '& '.join(cells) + '\\\\'    
 
 def main(argv):
-    inputfiles = ''
-    vardict = ''
+    global vardict     
     global output_dir
-    output_dir = ''
+    inputfiles,vardict,output_dir = '','',''    
     try:
-        opts, args = getopt.getopt(argv,"hi:o:")
+        opts, args = getopt.getopt(argv,"hi:d:o:")
     except getopt.GetoptError:
         print ('clean_outreg2.py -i <inputfile(s)> -d(optional) <var dict> -o(optional) <output directory>')
         sys.exit(2)
@@ -78,6 +81,10 @@ def main(argv):
     else:
         files = glob(inputfiles)
     
+    if vardict:
+        with open(vardict,'r') as f:
+            vardict = json.load(f)
+
     for f in files:
         proc_file(f)
 
