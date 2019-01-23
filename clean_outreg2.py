@@ -77,7 +77,7 @@ def main(argv):
         elif opt == '-o':
             output_dir = arg
     if ',' in inputfiles:
-        files = inputfiles.split(',')
+        files = [f.strip() for f in finputfiles.split(',')]
     else:
         files = glob(inputfiles)
     
