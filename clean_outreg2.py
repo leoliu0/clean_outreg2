@@ -5,20 +5,30 @@ import sys
 import xml.etree.ElementTree as ET
 from glob import glob
 
+print ('USAGE: python clean_outreg2.py -i <inputfile(s)> -d(optional) <var dict> -o(optional) <output directory>')
+
 def proc_file(f):
+    print('-----processing ',f)
+    if '.xml' not in f:
+        print('----------this is not xml file, skipped')
+        return
     tree = ET.parse(f)
     root = tree.getroot()
     global hline_count
     hline_count = False
-    with open(os.path.join(output_dir,f.replace('.xml','.tex')),'w',newline='') as wf:
-        wf.write('\hline\\\\ \n')
+    output_file = os.path.join(output_dir.replace('"','').replace("'",''),
+                                        os.path.split(f)[-1].replace('.xml','.tex'))
+    
+    with open(output_file,'w',newline='') as wf:
+        print(output_file, ' Saved')
         for x in root:
             if x.attrib:
                 for y in x:
                     for k,v in y.attrib.items():
                         if 'ExpandedColumnCount' in k:
                             global cols
-                            cols = int(v)                
+                            cols = int(v)
+                    wf.write('& '*(cols - 1) + '\\\\ \\hline')
                     for z in y:
                         if 'Row' in z.tag:
                             if list(z) and len(list(z))==cols:
@@ -77,14 +87,14 @@ def main(argv):
         elif opt == '-o':
             output_dir = arg
     if ',' in inputfiles:
-        files = [f.strip() for f in finputfiles.split(',')]
+        files = [f.strip() for f in inputfiles.split(',')]
     else:
         files = glob(inputfiles)
     
     if vardict:
         with open(vardict,'r') as f:
             vardict = json.load(f)
-
+    print(f'processing {len(files)} files')
     for f in files:
         proc_file(f)
 

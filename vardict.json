@@ -1,17 +1,24 @@
 {
+    "_1":"CAR1",
+    "_5":"CAR5",
+    "_10":"CAR10",
+    "_15":"CAR15",
+    "_20":"CAR20",
+    "_30":"CAR30",
     "Yes": "Trade Secret",
     "lnSize": "ln(Size)",
     "Q": "Tobin's Q",
     "lnRev": "ln(Revenue)",
     "Leverage": "Leverage",
     "ROA": "Return on Assets",
+    "logsale": "ln(Sales)",
     "sale_growth": "Sales growth",
     "HHI": "Industry HHI",
     "fcf": "Free Cash Flow",
     "dividends": "Dividends",
     "capx": "Capex (capex/at)",
     "ppe": "PPE (ppe/at) ",
-    "R&D": "R\\&D Expenses",
+    "R_D": "R\\&D Expenses",
     "missing_rd": "Missing R\\&D",
     "amihud": "Amihud Illiquidity",
     "spread": "Bid-Ask Spread",
@@ -23,5 +30,6 @@
     "xi_grant": "KPSS Value",
     "Analysts": "No. of Analysts",
     "Forecast_Error": "Forecast Error",
-    "Dispersion": "Dispersion"
+    "Dispersion": "Dispersion",
+    "earning_surprise":"Earnings Surprises"
 }
