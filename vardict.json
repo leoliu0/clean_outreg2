@@ -30,6 +30,8 @@
     "xi_grant": "KPSS Value",
     "Analysts": "No. of Analysts",
     "Forecast_Error": "Forecast Error",
+    "forecast_error": "Forecast Error",
     "Dispersion": "Dispersion",
-    "earning_surprise":"Earnings Surprises"
+    "earning_surprise":"Earnings Surprises",
+    "#":"$\times$"
 }

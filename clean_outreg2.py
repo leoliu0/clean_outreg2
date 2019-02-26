@@ -56,6 +56,7 @@ def proc_row(row):
             if vardict:
                 if cell in vardict:
                     cell = vardict[cell]
+        cell = cell.replace('#','$\\times$')
         cells.append(cell)
     if cols == none_count:
         global hline_count
