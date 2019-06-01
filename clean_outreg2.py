@@ -18,7 +18,7 @@ def proc_file(f):
     hline_count = False
     output_file = os.path.join(output_dir.replace('"','').replace("'",''),
                                         os.path.split(f)[-1].replace('.xml','.tex'))
-    
+
     with open(output_file,'w',newline='') as wf:
         print(output_file, ' Saved')
         for x in root:
@@ -67,14 +67,15 @@ def proc_row(row):
             return '& '*(cols-1) + '\\\\'
     if cols - (none_count + dot_count) <= 1:
         return
-    return '& '.join(cells) + '\\\\'    
+    return '& '.join(cells) + '\\\\'
 
 def main(argv):
-    global vardict     
+    global vardict
     global output_dir
-    inputfiles,vardict,output_dir = '','',''    
+    inputfiles,vardict,output_dir = '','',''
     try:
         opts, args = getopt.getopt(argv,"hi:d:o:")
+        print(opts)
     except getopt.GetoptError:
         print ('clean_outreg2.py -i <inputfile(s)> -d(optional) <var dict> -o(optional) <output directory>')
         sys.exit(2)
@@ -82,6 +83,8 @@ def main(argv):
         if opt == '-h':
             print ('clean_outreg2.py -i <inputfile(s)> -d(optional) <var dict> -o(optional) <output directory>')
         elif opt == '-i':
+            print(type(arg))
+            print('------'+arg)
             inputfiles = arg
         elif opt == '-d':
             vardict = arg
@@ -91,7 +94,7 @@ def main(argv):
         files = [f.strip() for f in inputfiles.split(',')]
     else:
         files = glob(inputfiles)
-    
+
     if vardict:
         with open(vardict,'r') as f:
             vardict = json.load(f)
