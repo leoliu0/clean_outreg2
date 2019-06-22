@@ -43,7 +43,9 @@ def proc_row(row):
     none_count = 0
     dot_count = 0
     cells = []
-    for cell in row:
+    for n,cell in enumerate(row):
+        if n==0:
+            none_count += 1
         if cell == 'VARIABLES':
             cell = ''
         if cell is None:
@@ -56,7 +58,7 @@ def proc_row(row):
             if vardict:
                 if cell in vardict:
                     cell = vardict[cell]
-        cell = cell.replace('#','$\\times$')
+        cell = cell.replace('#','$\\times$').replace('_',' ')
         cells.append(cell)
     if cols == none_count:
         global hline_count
@@ -65,7 +67,7 @@ def proc_row(row):
             return '\hline\\\\'+ '& '*(cols-1) + '\\\\'.strip('"')
         else:
             return '& '*(cols-1) + '\\\\'
-    if cols - (none_count + dot_count) <= 1:
+    if cols - (none_count + dot_count) == 0:
         return
     return '& '.join(cells) + '\\\\'
 
