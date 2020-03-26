@@ -32,7 +32,6 @@ def proc_file(f):
                         if 'ExpandedColumnCount' in k:
                             global cols
                             cols = int(v)
-                    wf.write('& ' * (cols - 1) + '\\\\ \\hline')
                     for z in y:
                         if 'Row' in z.tag:
                             if list(z) and len(list(z)) == cols:
@@ -42,7 +41,7 @@ def proc_file(f):
                                     ))
                                 if newrow:
                                     wf.write(newrow + ' \n')
-        wf.write('\hline\\\\ \n')
+        wf.write('\\hline')
 
 
 def proc_row(row):
@@ -68,14 +67,14 @@ def proc_row(row):
         cell = cell.replace('#', '$\\times$').replace('_', ' ')
         cells.append(cell)
     if set(cells[1:]) == {''} and cells[0] != '':
-        return '\\\\'
+        return
     if cols == none_count:
         global hline_count
         if hline_count is False:
             hline_count = True
-            return '\hline\\\\' + '& ' * (cols - 1) + '\\\\'.strip('"')
-        else:
-            return '& ' * (cols - 1) + '\\\\'
+            return '\hline\\\\'
+        # else:
+        # return '\\\\'
     if cols - (none_count + dot_count) == 0:
         return
     return '& '.join(cells) + '\\\\'
